@@ -14,7 +14,7 @@ This project provides an interactive, data-driven analysis of compensation trend
 
 1. **Clone the repository**
    ```bash
-   git clone <your-repo-url>
+   git clone https://github.com/The-Vheed/Global-Compensation-for-Nigerian-AI-Engineers
    cd Global-Compensation-for-Nigerian-AI-Engineers
    ```
 2. **Open `Index.html` in your browser**
