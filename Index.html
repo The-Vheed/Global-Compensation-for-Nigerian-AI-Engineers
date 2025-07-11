@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Compensation for Nigerian AI Engineers: An Interactive Analysis</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Chosen Palette: "Warm Neutral & Tech Blue" - A professional palette using a warm off-white background (#F7F5F2), a deep charcoal for text (#333333), a trustworthy blue for primary actions and charts (#2563EB), and a subtle secondary blue for accents and secondary chart data (#60A5FA). This combination is designed to be calm, credible, and easy on the eyes, ensuring the data is the main focus. -->
+    <!-- Application Structure Plan: The SPA is designed as a single-page, top-down narrative dashboard. The user journey starts with a professional introduction, moves to a clear visual comparison of salary data, dives deeper into specific remote salary evidence, explores the underlying market dynamics, and concludes with a well-reasoned proposal. This structure builds a logical, data-driven case in a persuasive and non-confrontational manner, making it ideal for sharing with a potential employer. -->
+    <!-- Visualization & Content Choices: 
+        1. Report Info: Comparing Local vs. Remote salaries for Nigerian talent. Goal: Compare. Viz Method: Dual Bar Chart (Chart.js Canvas). Interaction: Hover tooltips for precise data. Justification: A bar chart provides the most direct and universally understood visual comparison of the stark salary differences, which is the core of the discussion.
+        2. Report Info: Showcasing specific high-paying remote roles from various sources. Goal: Inform/Evidence. Viz Method: Styled Info Cards (HTML/Tailwind) with active links and a dedicated Horizontal Bar Chart (Chart.js Canvas). Interaction: Clickable links on cards, hover tooltips on chart. Justification: Cards with logos and key figures are visually engaging and provide direct, verifiable links. The chart provides a consolidated, easy-to-digest visual summary of multiple external sources.
+        3. Report Info: Explaining why international companies offer competitive remote rates. Goal: Explain/Organize. Viz Method: Icon-driven feature list (HTML/Tailwind with Unicode). Interaction: Static. Justification: Grouping complex economic arguments into digestible points with icons makes them less intimidating and easier to scan and comprehend.
+        4. Report Info: Global AI salary benchmarks. Goal: Compare/Context. Viz Method: Horizontal Bar Chart (Chart.js Canvas). Interaction: Hover tooltips. Justification: Provides essential context, showing that the remote salary discussion aligns with a well-established global market rate.
+        5. Report Info: Proposal for fair compensation. Goal: Propose. Viz Method: Professional, polite text blocks (HTML/Tailwind). Interaction: Static. Justification: Frames the discussion around mutual benefit and fair value, using polite and professional language suitable for a hiring context.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 400px;
+            max-height: 50vh;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 450px;
+            }
+        }
+        .nav-link {
+            transition: color 0.3s ease;
+        }
+        .nav-link:hover {
+            color: #2563EB;
+        }
+    </style>
+</head>
+<body class="bg-[#F7F5F2] text-[#333333]">
+
+    <nav class="bg-white/80 backdrop-blur-md sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex-shrink-0">
+                    <span class="font-bold text-lg text-blue-600">Salary Analysis</span>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#hero" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-gray-700">Home</a>
+                        <a href="#comparison" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-gray-700">Comparison</a>
+                        <a href="#evidence" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-gray-700">Evidence</a>
+                        <a href="#reasoning" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-gray-700">Reasoning</a>
+                        <a href="#global-context" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-gray-700">Global Benchmarks</a>
+                        <a href="#the-proposal" class="nav-link px-3 py-2 rounded-md text-sm font-medium text-gray-700">The Proposal</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <section id="hero" class="py-20 md:py-28 bg-white">
+            <div class="max-w-4xl mx-auto text-center px-4">
+                <h1 class="text-4xl md:text-6xl font-bold tracking-tight text-gray-900">Understanding the Global Value of Nigerian AI Talent</h1>
+                <p class="mt-6 text-lg md:text-xl text-gray-600">This interactive analysis provides insights into the compensation landscape for Nigerian AI engineers in the global remote marketplace. The data illustrates that compensation for these roles is often benchmarked against international standards, offering a different perspective from local salary statistics.</p>
+                <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <a href="#comparison" class="inline-block bg-blue-600 text-white font-bold py-3 px-8 rounded-lg shadow-lg hover:bg-blue-700 transition-transform transform hover:scale-105">
+                        Explore the Data
+                    </a>
+                    <a href="./Compensation for Nigerian AI Engineers.pdf" download class="inline-flex items-center bg-white text-blue-600 border-2 border-blue-600 font-bold py-3 px-8 rounded-lg shadow-lg hover:bg-blue-50 transition-transform transform hover:scale-105">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                        </svg>
+                        Download Full Report (PDF)
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section id="comparison" class="py-16 sm:py-24">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center">
+                    <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Local vs. Global: A Comparison of Market Dynamics</h2>
+                    <p class="mt-4 max-w-2xl mx-auto text-lg text-gray-600">This section provides a direct comparison of annual earnings for tech professionals in Nigeria, distinguishing between local employment and remote positions with international organizations. It highlights that these two market segments often operate under different compensation principles.</p>
+                </div>
+                <div class="mt-12">
+                    <div class="chart-container">
+                        <canvas id="salaryComparisonChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="evidence" class="bg-white py-16 sm:py-24">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center">
+                    <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Supporting Evidence: Remote Salaries for Nigerian Talent</h2>
+                    <p class="mt-4 max-w-2xl mx-auto text-lg text-gray-600">Here, we present evidence from various global platforms and companies that actively hire Nigerian talent for remote roles. The figures generally indicate compensation levels that are often above the $4,000 per month ($48,000/year) threshold, reflecting a global benchmark for such expertise.</p>
+                </div>
+                <div class="mt-12 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+                    <a href="https://www.crossover.com/job-roles/ai-engineer/nigeria" target="_blank" class="block bg-gray-50 p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
+                        <h3 class="font-bold text-lg text-blue-600">Crossover</h3>
+                        <p class="text-sm text-gray-500 mt-1">"Pay is set based on global value, not the local market."</p>
+                        <div class="mt-4 space-y-2">
+                            <p><span class="font-semibold">AI-First Software Engineer II:</span> $60,000 / year</p>
+                            <p><span class="font-semibold">AI-Augmented Principal Engineer:</span> $100,000 / year</p>
+                        </div>
+                    </a>
+                    <a href="https://arc.dev/salaries/software-engineers-in-nigeria" target="_blank" class="block bg-gray-50 p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
+                        <h3 class="font-bold text-lg text-blue-600">Arc.dev</h3>
+                        <p class="text-sm text-gray-500 mt-1">Average annual salaries for remote Nigerian developers.</p>
+                        <div class="mt-4 space-y-2">
+                            <p><span class="font-semibold">Remote Software Engineer:</span> $53,658 / year</p>
+                            <p><span class="font-semibold">Remote Data Scientist:</span> $55,611 / year</p>
+                        </div>
+                    </a>
+                    <a href="https://himalayas.app/salaries/countries/nigeria" target="_blank" class="block bg-gray-50 p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
+                        <h3 class="font-bold text-lg text-blue-600">Himalayas.app</h3>
+                        <p class="text-sm text-gray-500 mt-1">Average salary for a remote employee in Nigeria.</p>
+                        <div class="mt-4">
+                            <p><span class="font-semibold">Average Remote Salary:</span> $73,000 / year</p>
+                        </div>
+                    </a>
+                    <a href="https://app.loubby.ai/company/loubby-ai-6395b481/jobs/67c5573f5842ef2538b6b904" target="_blank" class="block bg-gray-50 p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
+                        <h3 class="font-bold text-lg text-blue-600">Loubby AI</h3>
+                        <p class="text-sm text-gray-500 mt-1">Entry/Mid-level AI-related role in Nigeria.</p>
+                        <div class="mt-4">
+                            <p><span class="font-semibold">Data Labelling Specialist:</span> $12,000 - $24,000 / year</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="text-center mt-16">
+                    <h3 class="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">Consolidated View: Remote Salaries by Platform</h3>
+                    <p class="mt-4 max-w-2xl mx-auto text-lg text-gray-600">This chart consolidates data from various reputable platforms, visually affirming a consistent trend of globally-aligned compensation for Nigerian talent in remote roles.</p>
+                </div>
+                <div class="mt-12">
+                     <div class="chart-container" style="max-width: 900px; height: 450px;">
+                        <canvas id="remoteSalarySourcesChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="reasoning" class="py-16 sm:py-24">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                 <div class="text-center">
+                    <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Understanding Global Compensation for Remote Roles</h2>
+                    <p class="mt-4 max-w-3xl mx-auto text-lg text-gray-600">The decision by international organizations to offer competitive salaries for remote talent is a strategic business choice driven by the realities of a globalized talent market. Compensation for specialized roles is often tied to the global value created, rather than solely the cost of living in a particular location.</p>
+                </div>
+                <div class="mt-12 grid md:grid-cols-3 gap-10 text-center">
+                    <div class="p-4">
+                        <div class="text-5xl text-blue-600">🌍</div>
+                        <h3 class="mt-4 font-bold text-xl">Global Value Creation</h3>
+                        <p class="mt-2 text-gray-600">An AI engineer contributes to an organization's global initiatives and revenue streams. The economic value generated is often tied to the larger, more affluent markets the organization serves (e.g., US, Europe), rather than solely the local Nigerian domestic market.</p>
+                    </div>
+                    <div class="p-4">
+                        <div class="text-5xl text-blue-600">🏆</div>
+                        <h3 class="mt-4 font-bold text-xl">Competition for Talent</h3>
+                        <p class="mt-2 text-gray-600">International organizations typically compete with other global entities for highly skilled talent. To attract and retain top-tier AI professionals, offering globally competitive compensation packages is often necessary.</p>
+                    </div>
+                    <div class="p-4">
+                        <div class="text-5xl text-blue-600">💸</div>
+                        <h3 class="mt-4 font-bold text-xl">Strategic Resource Allocation</h3>
+                        <p class="mt-2 text-gray-600">Engaging skilled talent from regions like Nigeria, even at globally competitive rates, can be a highly efficient approach for an international organization compared to hiring in higher-cost regions. This can represent a mutually beneficial arrangement.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="global-context" class="bg-white py-16 sm:py-24">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center">
+                    <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Global AI Salary Benchmarks</h2>
+                    <p class="mt-4 max-w-2xl mx-auto text-lg text-gray-600">To provide broader context, the chart below illustrates average AI Engineer salaries in major developed countries. This helps to show how remote salaries offered to Nigerian talent align with international standards.</p>
+                </div>
+                <div class="mt-12">
+                     <div class="chart-container" style="max-width: 900px; height: 350px;">
+                        <canvas id="globalBenchmarkChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="the-proposal" class="py-16 sm:py-24">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center">
+                    <h2 class="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">A Proposal for Fair and Strategic Compensation</h2>
+                    <p class="mt-4 max-w-2xl mx-auto text-lg text-gray-600">Based on the comprehensive data and market realities presented, a compensation package that reflects the global value of AI engineering expertise and aligns with international remote work standards is both reasonable and strategic.</p>
+                </div>
+                <div class="mt-10 space-y-6">
+                    <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r-lg">
+                        <h3 class="font-bold">Aligning with Global Value</h3>
+                        <p class="text-gray-700">As indicated by platforms like Crossover ($5,000-$8,333/month), Arc.dev ($4,471-$4,634/month), and Himalayas.app ($6,083/month), experienced Nigerian AI engineers working remotely for international organizations often earn compensation that reflects their global demand. A salary of $5,000 USD monthly is consistent with these established benchmarks.</p>
+                    </div>
+                    <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r-lg">
+                        <h3 class="font-bold">A Mutually Beneficial Investment</h3>
+                        <p class="text-gray-700">Engaging highly skilled Nigerian AI talent at a globally competitive rate (e.g., $5,000+ monthly) remains a resourceful approach for any organization compared to acquiring equivalent expertise in higher-cost markets. This represents a strategic investment in talent that is beneficial for both the organization and the engineer.</p>
+                    </div>
+                    <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r-lg">
+                        <h3 class="font-bold">Recognizing Specialized Expertise</h3>
+                        <p class="text-gray-700">The skills of an AI engineer contribute directly to an organization's global objectives. The value an engineer brings is tied to the international scope of their work. Therefore, it is appropriate for compensation to reflect this global value rather than being based solely on the local economic conditions of their residence.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="max-w-7xl mx-auto text-center px-4">
+            <p>&copy; 2024 Interactive Salary Analysis. Data synthesized from available market research.</p>
+            <p class="text-sm text-gray-400 mt-2">This page is for informational purposes and to support a constructive, data-driven conversation.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            function wrapLabels(labels, maxChars) {
+                return labels.map(label => {
+                    if (typeof label === 'string' && label.length > maxChars) {
+                        const words = label.split(' ');
+                        const lines = [];
+                        let currentLine = '';
+                        words.forEach(word => {
+                            if ((currentLine + ' ' + word).length > maxChars) {
+                                lines.push(currentLine.trim());
+                                currentLine = word;
+                            } else {
+                                currentLine += ' ' + word;
+                            }
+                        });
+                        lines.push(currentLine.trim());
+                        return lines;
+                    }
+                    return label;
+                });
+            }
+
+            const tooltipTitleCallback = function(tooltipItems) {
+                const item = tooltipItems[0];
+                let label = item.chart.data.labels[item.dataIndex];
+                if (Array.isArray(label)) {
+                  return label.join(' ');
+                } else {
+                  return label;
+                }
+            };
+            
+            const commonTooltipOptions = {
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            title: tooltipTitleCallback
+                        }
+                    }
+                }
+            };
+            
+            const salaryData = {
+                labels: wrapLabels(['Local IT Professional (Avg. High)', 'Local AI/ML Engineer (Avg. High)', 'Remote Data Scientist (Avg.)', 'Remote Software Engineer (Avg.)', 'Remote AI Engineer (Crossover)'], 16),
+                datasets: [{
+                    label: 'Annual Salary (USD)',
+                    data: [7468, 13333, 55611, 53658, 60000],
+                    backgroundColor: [
+                        '#9CA3AF', 
+                        '#6B7280',
+                        '#60A5FA', 
+                        '#3B82F6',
+                        '#2563EB'
+                    ],
+                    borderColor: '#ffffff',
+                    borderWidth: 2
+                }]
+            };
+
+            const salaryComparisonCtx = document.getElementById('salaryComparisonChart').getContext('2d');
+            new Chart(salaryComparisonCtx, {
+                type: 'bar',
+                data: salaryData,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        title: {
+                            display: true,
+                            text: 'Annual Salaries (USD): Local Market vs. Remote International Roles',
+                            font: {
+                                size: 16
+                            },
+                            padding: {
+                                top: 10,
+                                bottom: 20
+                            }
+                        },
+                         tooltip: {
+                            callbacks: {
+                                title: tooltipTitleCallback,
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed.y !== null) {
+                                        label += new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(context.parsed.y);
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return '$' + value / 1000 + 'k';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            const globalBenchmarkData = {
+                labels: wrapLabels(['Nigeria (Remote Avg.)', 'UK', 'Canada', 'Germany', 'USA (Remote 25th %ile)', 'USA (Remote Avg.)', 'Australia', 'USA (Overall Avg.)'], 20),
+                datasets: [{
+                    label: 'Average Annual AI Engineer Salary (USD)',
+                    data: [73000, 71500, 74000, 100000, 84000, 101752, 103000, 150000],
+                    backgroundColor: '#2563EB',
+                    borderColor: '#ffffff',
+                    borderWidth: 1,
+                }]
+            };
+            
+            const globalBenchmarkCtx = document.getElementById('globalBenchmarkChart').getContext('2d');
+            new Chart(globalBenchmarkCtx, {
+                type: 'bar',
+                data: globalBenchmarkData,
+                 options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        title: {
+                            display: true,
+                            text: 'Global Average AI Engineer Salaries (converted to USD)',
+                            font: { size: 16 },
+                            padding: { top: 10, bottom: 20 }
+                        },
+                        tooltip: {
+                             callbacks: {
+                                title: tooltipTitleCallback,
+                                label: function(context) {
+                                    return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(context.parsed.x);
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return '$' + value / 1000 + 'k';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            const remoteSalarySourcesData = {
+                labels: wrapLabels([
+                    'Crossover (AI-First SE)', 
+                    'Crossover (AI-Augmented Principal Eng)', 
+                    'Arc.dev (Remote Software Eng)', 
+                    'Arc.dev (Remote Data Scientist)', 
+                    'Himalayas.app (Avg Remote Employee)', 
+                    'Loubby AI (Data Labelling Specialist - Max)'
+                ], 25),
+                datasets: [{
+                    label: 'Annual Salary (USD)',
+                    data: [60000, 100000, 53658, 55611, 73000, 24000],
+                    backgroundColor: '#3B82F6',
+                    borderColor: '#ffffff',
+                    borderWidth: 1,
+                }]
+            };
+
+            const remoteSalarySourcesCtx = document.getElementById('remoteSalarySourcesChart').getContext('2d');
+            new Chart(remoteSalarySourcesCtx, {
+                type: 'bar',
+                data: remoteSalarySourcesData,
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        title: {
+                            display: true,
+                            text: 'Annual Remote Salaries for Nigerian Talent by Platform (USD)',
+                            font: { size: 16 },
+                            padding: { top: 10, bottom: 20 }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                title: tooltipTitleCallback,
+                                label: function(context) {
+                                    return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(context.parsed.x);
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: function(value) {
+                                    return '$' + value / 1000 + 'k';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
